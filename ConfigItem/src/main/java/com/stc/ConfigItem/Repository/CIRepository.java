@@ -7,5 +7,10 @@ import java.util.List;
 
 public interface CIRepository extends JpaRepository<CIEntity,Long>
 {
-
+    /**
+     * 根据项目id查找配置项
+     * @param projectId
+     * @return
+     */
+    List<CIEntity> findCIEntitiesByProjectId(Long projectId);
 }

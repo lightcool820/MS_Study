@@ -1,6 +1,7 @@
 package com.stc.ConfigItem.Domain;
 
 import com.stc.ConfigItem.Repository.CIRepository;
+import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
@@ -32,12 +33,17 @@ public class CIEntity {
     //所属基线id
     private long baseLineId;
     @Transient
-    @Autowired
-    private CIRepository ciRepo;
+    CIRepository ciRep;
 
+    public CIEntity(CIRepository ciRep)
+    {
+        this.ciRep = ciRep;
+    }
+
+    public CIEntity(){}
     /**
      * 添加配置项
-     * @param ci 配置项
+     * @param
      * @return 配置项id
      */
     public CIEntity addConfigItem(String name,String code,long projectId)
@@ -46,7 +52,51 @@ public class CIEntity {
         ci.setName(name);
         ci.setCode(code);
         ci.setProjectId(projectId);
-        return ciRepo.save(ci);
+        return ciRep.save(ci);
+    }
+
+    /**
+     * 添加配置项
+     * @param ci 配置项
+     * @return 配置项id
+     */
+    public CIEntity addConfigItem(CIEntity ci)
+    {
+        return ciRep.save(ci);
+    }
+
+    /**
+     * 删除配置项
+     * @param id
+     * @return
+     */
+    public boolean deleteConfigItem(Long id)
+    {
+        try
+        {
+            ciRep.delete(id);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return  false;
+        }
+
+    }
+
+    /**
+     * 根据项目id查找配置项
+     * @param projectId
+     * @return
+     */
+    public List<CIEntity> findCIByProject(Long projectId)
+    {
+        return ciRep.findCIEntitiesByProjectId(projectId);
+    }
+
+    public List<CIEntity> findAllCI()
+    {
+        return  ciRep.findAll();
     }
 
     public long getId() {
