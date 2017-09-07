@@ -1,8 +1,11 @@
 package com.stc.ConfigItem.Controller;
 
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.DiscoveryClient;
 import com.stc.ConfigItem.Domain.CIEntity;
 import com.stc.ConfigItem.Repository.CIRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +18,7 @@ public class CIController
 {
     @Autowired
     private CIRepository ciRepo;
+
 
     /**
      * 传统传参方式进行添加，非restful
