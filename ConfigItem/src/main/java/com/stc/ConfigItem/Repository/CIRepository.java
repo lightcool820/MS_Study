@@ -2,6 +2,8 @@ package com.stc.ConfigItem.Repository;
 
 import com.stc.ConfigItem.Domain.CIEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -13,4 +15,5 @@ public interface CIRepository extends JpaRepository<CIEntity,Long>
      * @return
      */
     List<CIEntity> findCIEntitiesByProjectId(Long projectId);
+
 }

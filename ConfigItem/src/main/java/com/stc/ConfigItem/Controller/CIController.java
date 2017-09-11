@@ -75,4 +75,15 @@ public class CIController
     {
         return new CIEntity(ciRepo).findAllCI();
     }
+
+    /**
+     * 更新配置项
+     * @param ci
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.PUT)
+    public boolean updateCI(@RequestBody CIEntity ci)
+    {
+        return new CIEntity(ciRepo).updateCI(ci);
+    }
 }

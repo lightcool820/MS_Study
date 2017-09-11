@@ -32,6 +32,15 @@ public class CIEntity {
     private long projectId;
     //所属基线id
     private long baseLineId;
+    /**
+     * 当前配置项状态。
+     * 0：无
+     * 1：提交入库申请
+     * 2：提交入库审核
+     * 3：提交出库申请
+     * 4：提交出库审核
+     */
+    private int currentStat;
     @Transient
     CIRepository ciRep;
 
@@ -99,6 +108,28 @@ public class CIEntity {
         return  ciRep.findAll();
     }
 
+    /**
+     * 更新配置项
+     * @param ci
+     * @return
+     */
+    public boolean updateCI(CIEntity ci)
+    {
+        try
+        {
+            ciRep.saveAndFlush(ci);
+            if(ci.getCurrentStat() == 1)
+            {
+                //配置项入库申请放到消息队列中
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
     public long getId() {
         return id;
     }
@@ -153,5 +184,13 @@ public class CIEntity {
 
     public void setBaseLineId(long baseLineId) {
         this.baseLineId = baseLineId;
+    }
+
+    public int getCurrentStat() {
+        return currentStat;
+    }
+
+    public void setCurrentStat(int currentStat) {
+        this.currentStat = currentStat;
     }
 }
